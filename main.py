@@ -42,7 +42,7 @@ def DFT(signal):
     x = np.arange(N)
     u = x.reshape((N, 1))
     pi = np.pi
-    exponent = np.exp(-2*1j*pi*u*x/N)
+    exponent = np.exp((-2 * 1j * pi * u * x)/N)
     return np.around(np.dot(exponent, signal), decimals=9)
 
 
@@ -56,7 +56,7 @@ def IDFT(inv_signal):
     x = np.arange(N)
     u = x.reshape((N, 1))
     pi = np.pi
-    exponent = np.exp(2 * 1j * pi * u * x / N)
+    exponent = np.exp((2 * 1j * pi * u * x)/ N)
     return (1/N) * np.dot(exponent, inv_signal)
 
 
@@ -162,23 +162,15 @@ def resize_spectrogram(data, ratio):
     :param ratio: a positive float64 representing the rate change of the WAV file.
     :return:
     """
-    # plt.specgram(data)
-    # plt.show()
     if ratio == 1:
         return data
     spectogram_mat = stft(data)
     specto_rows = spectogram_mat.shape[0]
-    # plt.plot(spectogram_mat)
-    # plt.show()
     lst = []
     for row in range(specto_rows):
         lst.append(resize(spectogram_mat[row], ratio))
     new_spectogram = np.asarray(lst, dtype=np.int16)
-    # plt.plot(new_spectogram)
-    # plt.show()
     new_data = istft(new_spectogram).astype(np.int16)
-    # plt.specgram(new_data)
-    # plt.show()
     return new_data
 
 
@@ -207,8 +199,6 @@ def conv_der(im):
     dy_vec = dx_vec.T
     dx_im = scipy.signal.convolve2d(im, dx_vec, mode='same')
     dy_im = scipy.signal.convolve2d(im, dy_vec, mode='same')
-    # dx_im = np.convolve(im.flatten(), dx_vec)
-    # dy_im = np.convolve(im.flatten(), dy_vec)
     magnitude = np.sqrt(np.abs(dx_im) ** 2 + np.abs(dy_im) ** 2)
     return magnitude
 
